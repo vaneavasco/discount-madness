@@ -34,9 +34,9 @@ class DiscountServiceProvider extends ServiceProvider
                 $app->make(ProductsRepository::class)
             );
 
-            $discountService->addDiscount(new Over1000Discount());
-            $discountService->addDiscount(new SwitchesDiscount());
-            $discountService->addDiscount(new ToolsDiscount());
+            $discountService->addDiscountType(new SwitchesDiscount());
+            $discountService->addDiscountType(new ToolsDiscount());
+            $discountService->addDiscountType(new Over1000Discount());
 
             return $discountService;
         });

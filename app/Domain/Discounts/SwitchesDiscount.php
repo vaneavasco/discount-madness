@@ -2,8 +2,23 @@
 
 namespace App\Domain\Discounts;
 
+/**
+ * Class SwitchesDiscount
+ * @package App\Domain\Discounts
+ */
+/**
+ * Class SwitchesDiscount
+ * @package App\Domain\Discounts
+ */
 class SwitchesDiscount extends Discount
 {
+    /**
+     * @param array $orderData
+     * @param array $clientData
+     * @param array $productData
+     *
+     * @return array
+     */
     public function applyDiscount(array $orderData, array $clientData, array $productData): array
     {
         $applyForProducts = [];
@@ -13,26 +28,38 @@ class SwitchesDiscount extends Discount
             }
         }
 
-        $orderData = $this->applyFreeProduct($orderData, $applyForProducts);
+        $discount = $this->applyFreeProduct($orderData, $applyForProducts);
 
-        return $orderData;
+        return $discount;
     }
 
+    /**
+     * @param array $orderData
+     * @param array $applyForProducts
+     *
+     * @return array
+     */
     protected function applyFreeProduct(array $orderData, array $applyForProducts): array
     {
+        $discount = [];
         foreach ($orderData['items'] as $orderItem) {
             if (in_array($orderItem['product-id'], $applyForProducts)) {
                 if ($orderItem['quantity'] == 5) {
-                    $orderItem['quantity']++;
+                    $discount['switchesDiscount'] = [
+                        'bonusFreeItem' => [
+                            $orderItem['product-id']
+                        ]
+                    ];
                 } else {
-                    $orderItem['total'] -= $orderItem['unit-price'];
+                    $discount['switchesDiscount'] = [
+                        'itemDiscount' => [
+                            $orderItem['product-id'] => 100
+                        ]
+                    ];
                 }
-                $orderData['discount'][] = [
-                    'SwitchesDiscount' => $orderItem['unit-price']
-                ];
             }
         }
 
-        return $orderData;
+        return $discount;
     }
 }

@@ -8,6 +8,6 @@ For every product of category "Switches" (id 2), when you buy five, you get a si
 If you buy two or more products of category "Tools" (id 1), you get a 20% discount on the cheapest product.
 
 
-##Todo
+## Todo
 
-Fix discounts, refactor, finish project
+Add domain and presentation models to replace arrays, rate limiter, auth, cache.
